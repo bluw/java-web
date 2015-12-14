@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <f:view locale="#{userManager.language}">
+    <f:loadBundle basename="languages.lang" var="msg"/>
+    <ui:composition template="./template.xhtml">
+    <ui:define name="content">
+    <h:body>
+        <h:form>
+        
+           
+        <c:forEach items="#{userManager.findKeyboardListByCategory()}" var="keyboard">
+            
+            <div id="keyboardElements">
+                <br/>
+                <h:outputText value="#{keyboard.brand} #{keyboard.name} - #{keyboard.switches} Switches - Layout: #{keyboard.layout} - "/>
+                <h:outputText value="#{keyboard.price}" converter="priceConverter"/>
+                <br/>
+                <br/>
+                <h:commandLink value="#{msg.details}" action="#{userManager.viewDetails(keyboard)}" />
+                <br/>
+                <br/>
+                <h:commandButton value="#{msg.add}" action="#{userManager.addArticle(keyboard.id)}" onclick="alert('#{msg.added}')"/>
+                <h:selectOneListbox id="Quantity" size="1" value="#{userManager.nbArticle}">
+                        <f:selectItem itemValue="1" itemLabel="1"/>
+                        <f:selectItem itemValue="2" itemLabel="2"/>
+                        <f:selectItem itemValue="3" itemLabel="3"/>
+                        <f:selectItem itemValue="4" itemLabel="4"/>
+                        <f:selectItem itemValue="5" itemLabel="5"/>
+                        <f:selectItem itemValue="6" itemLabel="6"/>
+                        <f:selectItem itemValue="7" itemLabel="7"/>
+                        <f:selectItem itemValue="8" itemLabel="8"/>
+                        <f:selectItem itemValue="9" itemLabel="9"/>                
+                </h:selectOneListbox>
+                
+            </div>
+        
+        </c:forEach>
+        
+    </h:form>
+    </h:body>
+    </ui:define>
+    </ui:composition>
+    </f:view>
+</html>

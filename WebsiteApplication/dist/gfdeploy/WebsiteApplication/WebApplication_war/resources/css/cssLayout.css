@@ -1,0 +1,115 @@
+
+#top {
+width: auto;
+overflow : hidden;
+}
+
+#left {
+    float: left;
+    padding: 5px;
+    width: 150px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+#right {
+    float: right;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    background-color: #dddddd;
+    padding: 5px;
+}
+
+.left_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin-left: 170px;
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 170px 0px 170px;
+}
+
+#menu {
+    position: relative;
+    background-color: #333;
+    margin: 0px 0px 10px 0px;
+    border-style: solid;
+    border-width: 2px;
+}
+
+#menu li {
+    display: inline;
+    color: #CCC;
+    font-weight: bold;
+    list-style-type: none;
+    padding-right: 20px;
+}
+
+#logo {
+    margin: 10px 10px 0px 0px;
+    float: left;
+    width: 600px;
+}
+
+#frenchflag {
+    margin: 10px 10px 0px 0px;
+    float: left;
+    width: 400px;
+}
+
+#britflag {
+    margin: 10px 10px 0px 0px;
+    float: left;
+    width: 400px;
+}
+
+#name_header {
+    font-size: 16px;
+    font-weight: bold;
+    float: left;
+    width: 400px;
+}
+
+#customer_header {
+    float: left;
+    width: 200px;
+}
+
+#language {
+    float: right;
+    width: 30px;
+}
+
+#keyboardElements {   
+    position: relative;
+    margin: 10px 10px 0px 0px;
+    width: 550px;
+    height: 110px;
+    border-style: solid;
+    background-color: white;
+    border-width: 2px;
+}
+
+#keyboardCart {   
+    position: relative;
+    margin: 10px 10px 0px 0px;
+    width: 550px;
+    height: 125px;
+    border-style: solid;
+    background-color: white;
+    border-width: 2px;
+}
+
+#keyboardImg {
+    position: relative;
+    margin: 10px 10px 0px 0px;
+    width: 100px;
+    height: 100px;
+}

@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view locale="#{userManager.language}">
+    <f:loadBundle basename="languages.lang" var="msg"/>
+    <ui:composition template="./template.xhtml">
+    <ui:define name="content">
+    <h:body>
+
+        <div id="content" class="center_content">
+            <h:form>
+                  
+                <h:outputLabel value="#{msg.lastName}" for="lastName"/>
+                <h:inputText id="lastName" validatorMessage="#{msg.validateLastName}" value="#{userManager.client.lastName}">
+                    <f:validateLength minimum="2" maximum="50"/>
+                </h:inputText>
+                <h:message for="lastName"/>               
+                <br/>
+                
+                <h:outputLabel value="#{msg.firstName}" for="firstName"/>
+                <h:inputText id="firstName" validatorMessage="#{msg.validateFirstName}" value="#{userManager.client.firstName}">
+                    <f:validateLength minimum="2" maximum="50"/>
+                </h:inputText>
+                <h:message for="firstName"/>
+                <br/>
+                
+                <h:outputLabel value="#{msg.email}" for="email"/>
+                <h:inputText id="email" value="#{userManager.client.email}">
+                    <f:validator validatorId="emailValidator"></f:validator>
+                    <f:attribute name="userLanguage" value="#{userManager.language}"/>
+                </h:inputText>
+                <h:message for="email"/>                   
+                <br/>
+                
+                <h:outputLabel value="#{msg.password}" for="password"/>
+                <h:inputSecret id="password" validatorMessage="#{msg.validatePassword}" value="#{userManager.client.password}" binding="#{passwordComponent}">
+                    <f:validateLength minimum="6" maximum="50"/>
+                </h:inputSecret>
+                <h:message for="password"/>
+                <br/>
+                
+                <h:outputLabel value="#{msg.checkPassword}" for="passwordCheck"/>
+                <h:inputSecret id="passwordCheck" value="#{userManager.passwordCheck}" required="true" requiredMessage="#{msg.mandatoryPasswordCheck}">
+                    <f:validator validatorId="passwordValidator"></f:validator>
+                    <f:attribute name="userLanguage" value="#{userManager.language}"/>
+                    <f:attribute name="password" value="#{passwordComponent.value}"/>  
+                </h:inputSecret>
+                <h:message for="passwordCheck"/>
+                <br/>
+                
+                <h:outputLabel value="#{msg.phone}" for="phone"/>
+                <h:inputText id="phone" value="#{userManager.client.phone}" validatorMessage="#{msg.validatePhone}">
+                    <f:validateLength minimum="0" maximum="12"/>
+                </h:inputText>
+                <h:message for="phone"/>
+                <br/>
+                
+                <h:outputLabel value="#{msg.street}" for="street"/>
+                <h:inputText id="street" validatorMessage="#{msg.validateStreet}" value="#{userManager.client.street}">
+                    <f:validateLength minimum="5" maximum="50"/>
+                </h:inputText>
+                <h:message for="street"/>
+                <br/>
+                
+                <h:outputLabel value="#{msg.houseNum}" for="houseNum"/>
+                <h:inputText id="houseNum" validatorMessage="#{msg.validateHouseNum}" value="#{userManager.client.houseNum}">
+                    <f:validateDoubleRange minimum="1" maximum="9999"/>
+                </h:inputText>
+                <h:message for="houseNum"/>
+                <br/>
+                
+                <h:outputLabel value="#{msg.city}" for="city"/>
+                <h:inputText id="city" validatorMessage="#{msg.validateCity}" value="#{userManager.client.city}">
+                    <f:validateLength minimum="2" maximum="50"/>
+                </h:inputText>
+                <h:message for="city"/>
+                <br/>
+                
+                <h:outputLabel value="#{msg.postCode}" for="postCode"/>
+                <h:inputText id="postCode" validatorMessage="#{msg.validatePostalCode}" value="#{userManager.client.postCode}">
+                    <f:validateDoubleRange minimum="1" maximum="999999"/>
+                </h:inputText>
+                <h:message for="postCode"/>
+                <br/>
+                
+                <h:outputLabel value="#{msg.country}"/>
+                <h:selectOneMenu id = "countryLabel" value="#{userManager.country.label}">
+                    <c:forEach items="#{userManager.countryList}" var="cntry">
+                            <f:selectItem itemValue="#{cntry.label}" itemLabel="#{cntry.nameTranslated}"/>
+                    </c:forEach>
+                </h:selectOneMenu>
+          
+                <h:commandButton value="#{msg.confirmSignUp}" disabled="#{userManager.isLogged}" action="#{userManager.register()}"/>
+                <br/>
+        </h:form>
+        </div>
+
+    </h:body>
+    </ui:define>
+    </ui:composition>
+    </f:view>
+</html>

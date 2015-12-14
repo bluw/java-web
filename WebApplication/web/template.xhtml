@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Keyboard Shop</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <div id="logo"><img src="resources/images/logo.png"></img></div>
+            
+            <div id="name_header">
+                <c:if test="#{!userManager.isLogged}">
+                <h:outputText value="#{msg.welcomeGuest}"/>
+            </c:if>
+        
+            <c:if test="#{userManager.isLogged}">
+                <h:outputText value="#{msg.welcomeBack} #{userManager.client.firstName}"/>
+            </c:if>     
+            </div>
+            
+            <div id="language">
+                <span style="float: right">
+                <h:form>
+                  <h:commandLink  action="#{userManager.loadLanguage('fr')}">    
+                    <h:graphicImage value="resources/images/french.png"/>
+                  </h:commandLink>
+
+                  <h:commandLink  action="#{userManager.loadLanguage('en')}">
+                    <h:graphicImage value="resources/images/english.png"/>
+                  </h:commandLink>
+                </h:form>
+                </span>
+                
+           </div>          
+        </div>
+        
+        <div id="menu">
+            <ul>
+                <h:form>
+                    <li><h:commandLink value="#{msg.home}" action="faces/home.xhtml" style="color: #CCC"/></li>
+                    <li><h:commandLink value="#{msg.aboutUs}" action="faces/aboutUs.xhtml" style="color: #CCC"/></li>  
+                    <li><h:commandLink value="#{msg.login}" action="faces/loginIn.xhtml" disabled="#{userManager.isLogged}" style="color: #CCC"/></li>
+                    <li><h:commandLink value="#{msg.register}" action="faces/registerPage.xhtml" disabled="#{userManager.isLogged}" style="color: #CCC"/></li>
+                    <li><h:commandLink value="#{msg.shoppingCart}" action="faces/shoppingCart.xhtml" style="color: #CCC"/></li>
+                </h:form>
+            </ul>            
+        </div>
+            
+        <div id="left">
+                
+            <h:form>
+                <h:commandButton value="#{msg.search}" action="#{userManager.search()}"/>
+                                   
+                <h1>Categories</h1>
+     
+                <h:selectOneMenu value="#{userManager.categoryLabel}">
+                        <c:forEach items="#{userManager.categoryList}" var="category">
+                            <f:selectItem itemValue="#{category.label}" itemLabel="#{category.labelnTranslated}"/>
+                        </c:forEach>
+                </h:selectOneMenu>
+            </h:form>
+        </div>                       
+            
+        <div id="content" class="left_content">
+            <ui:insert name="content"/>
+        </div>
+                      
+    </h:body>
+
+</html>

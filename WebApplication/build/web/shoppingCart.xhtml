@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <f:view locale="#{userManager.language}">
+    <f:loadBundle basename="languages.lang" var="msg"/>
+    <ui:composition template="./template.xhtml">
+    <ui:define name="content">
+    <h:body>
+        <h:form>
+        <c:if test="#{userManager.cart.isEmpty()}">
+            <h:outputText value="#{msg.emptyCart}"/>
+            <br/>
+        </c:if>
+        <c:if test="#{!userManager.cart.isEmpty()}">
+            <c:forEach items="#{userManager.getKeyboardFromCart()}" var="keyboard">
+              
+                <div id="keyboardCart">
+                
+                <ul>
+                <li>
+                    <h:outputText value="#{keyboard.brand} #{keyboard.name} - #{keyboard.switches} Switches - Layout: #{keyboard.layout} - "/>
+                    <h:outputText value="#{keyboard.price}" converter="priceConverter"/>
+                </li>
+                <li>
+                    <h:outputText value="#{msg.quantity} #{userManager.cart.get(keyboard.id)}"/>
+                    <br/>
+                    <h:commandButton value="#{msg.getRid}" action="#{userManager.takeOffOneArticle(keyboard.id)}"/>
+                </li>
+                <li>
+                    <h:outputText value="#{msg.subTotal}"/>
+                    <h:outputText value="#{userManager.computeSubTotal(keyboard.price, userManager.cart.get(keyboard.id))}" converter="priceConverter"/>
+                </li>
+                </ul>
+                    <h:commandButton value="#{msg.deleteArticle}" action="#{userManager.deleteArticle(keyboard.id)}"/>
+                </div>
+                
+            </c:forEach>
+            
+            <c:if test="#{userManager.isLogged}">
+                <h:outputText value="#{msg.shippingCost} (#{userManager.client.country.nameTranslated}): "/>
+                <h:outputText value="#{userManager.client.country.shippingCost}" converter="priceConverter"/>
+                <br/>
+            </c:if>
+            
+            <h:outputText value="#{msg.total}"/>
+            <h:outputText value="#{userManager.computeTotal()}" converter="priceConverter"/>
+            <br/>
+        </c:if>
+        <c:if test="#{userManager.isLogged}">
+            <br/>
+            <h:outputText value="#{msg.address}"/>
+            <br/>
+            <h:outputLabel value="#{msg.houseNum} "/>
+            <h:outputText value="#{userManager.client.houseNum}"/>
+            <br/>
+            <h:outputLabel value="#{msg.street} "/>
+            <h:outputText value="#{userManager.client.street}"/>
+            <br/>
+            <h:outputLabel value="#{msg.postCode} "/>
+            <h:outputText value="#{userManager.client.postCode}"/>
+            <br/>
+            <h:outputLabel value="#{msg.city} "/>
+            <h:outputText value="#{userManager.client.city}"/>
+            <br/>
+            <h:outputLabel value="#{msg.country} "/>
+            <h:outputText value="#{userManager.client.country.nameTranslated}"/>
+            <br/>
+            <h:outputLabel value="#{msg.phone} "/>
+            <h:outputText value="#{userManager.client.phone}"/>
+            <br/>
+            <h:commandButton value="#{msg.confirm}" action="#{userManager.addOrder()}" disabled="#{userManager.cart.isEmpty()}"/>
+        </c:if>
+        <c:if test="#{!userManager.isLogged}">
+            <br/>
+            <h:commandLink value="#{msg.register}" disabled="#{userManager.isLogged}" action="faces/registerPage.xhtml" />
+            <br/>
+            <h:commandLink value="#{msg.orLogin}" disabled="#{userManager.isLogged}" action="faces/loginIn.xhtml" />
+        </c:if>
+
+       </h:form>
+    </h:body>
+    </ui:define>
+    </ui:composition>
+    </f:view>
+</html>

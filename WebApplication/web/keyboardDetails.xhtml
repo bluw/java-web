@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <f:view locale="#{userManager.language}">
+    <f:loadBundle basename="languages.lang" var="msg"/>
+    <ui:composition template="./template.xhtml">
+    <ui:define name="content">
+    <h:body>
+        <h:form>
+        <div id="content" class="center_content">
+            <h:graphicImage id="keyboardImg" value="#{userManager.keyboardToDisplay.urlImage}"/>
+            
+            <ul>
+                <li>
+                    <h:outputText value="#{userManager.keyboardToDisplay.brand} #{userManager.keyboardToDisplay.name} - "/>
+                    <h:outputText value="#{userManager.keyboardToDisplay.price}" converter="priceConverter"/>
+                </li>
+                <li>
+                    <h:outputText value="#{msg.switchType}#{userManager.keyboardToDisplay.switches}"/>
+                </li>
+                <li>
+                    <h:outputText value="#{msg.layout}#{userManager.keyboardToDisplay.layout}"/>
+                </li>
+                <li>
+                    <h:outputText value="#{msg.led}"/>
+                    <h:outputText value="#{userManager.keyboardToDisplay.led}" converter="ledBooleanConverter">
+                        <f:attribute name="userLanguage" value="#{userManager.language}"/>
+                    </h:outputText>
+                </li>
+                <li>
+                    <h:outputText value="#{msg.length}#{userManager.keyboardToDisplay.longeur} cm"/>
+                </li>
+                <li>
+                    <h:outputText value="#{msg.weight}#{userManager.keyboardToDisplay.weight} kg"/>
+                </li>
+            </ul>
+            
+                
+            <h:commandButton value="#{msg.add}" action="#{userManager.addArticle(userManager.keyboardToDisplay.id)}" onclick="alert('#{msg.added}')"/>
+                <h:selectOneListbox id="Quantity" size="1" value="#{userManager.nbArticle}">
+                        <f:selectItem itemValue="1" itemLabel="1"/>
+                        <f:selectItem itemValue="2" itemLabel="2"/>
+                        <f:selectItem itemValue="3" itemLabel="3"/>
+                        <f:selectItem itemValue="4" itemLabel="4"/>
+                        <f:selectItem itemValue="5" itemLabel="5"/>
+                        <f:selectItem itemValue="6" itemLabel="6"/>
+                        <f:selectItem itemValue="7" itemLabel="7"/>
+                        <f:selectItem itemValue="8" itemLabel="8"/>
+                        <f:selectItem itemValue="9" itemLabel="9"/>                
+                </h:selectOneListbox>
+                <br/>
+                <h:commandLink value="#{msg.goBack}" action="faces/keyboardListPage.xhtml" />
+        </div>
+        </h:form>
+    </h:body>
+    </ui:define>
+    </ui:composition>
+    </f:view>
+</html>
