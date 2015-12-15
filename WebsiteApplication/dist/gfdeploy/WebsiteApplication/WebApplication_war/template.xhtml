@@ -48,9 +48,11 @@
             <ul>
                 <h:form>
                     <li><h:commandLink value="#{msg.home}" action="faces/home.xhtml" style="color: #CCC"/></li>
-                    <li><h:commandLink value="#{msg.aboutUs}" action="faces/aboutUs.xhtml" style="color: #CCC"/></li>  
+                    <li><h:commandLink value="#{msg.aboutUs}" action="faces/aboutUs.xhtml" style="color: #CCC"/></li>
+                    <c:if test="#{!userManager.isLogged}">
                     <li><h:commandLink value="#{msg.login}" action="faces/loginIn.xhtml" disabled="#{userManager.isLogged}" style="color: #CCC"/></li>
                     <li><h:commandLink value="#{msg.register}" action="faces/registerPage.xhtml" disabled="#{userManager.isLogged}" style="color: #CCC"/></li>
+                    </c:if>
                     <li><h:commandLink value="#{msg.shoppingCart}" action="faces/shoppingCart.xhtml" style="color: #CCC"/></li>
                 </h:form>
             </ul>            

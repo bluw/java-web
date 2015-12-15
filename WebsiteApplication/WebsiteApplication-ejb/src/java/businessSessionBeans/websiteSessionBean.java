@@ -100,6 +100,7 @@ public class websiteSessionBean implements websiteSessionBeanLocal {
                 definitiveKb.setSwitches(keyboard.getSwitches());
                 definitiveKb.setId(keyboard.getIdKeyboard());
                 definitiveKb.setBrand(keyboard.getBrand());
+                definitiveKb.setUrlImage(keyboard.getUrlimage());
 
                 list.add(definitiveKb);
             }

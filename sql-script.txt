@@ -1,0 +1,275 @@
+drop table LineOrders;
+drop table Orders;
+drop table Possession;
+drop table TranslationsCategory;
+drop table TranslationsCountry;
+drop table Languages;
+drop table Category;
+drop table Client;
+drop table Keyboard;
+drop table Country;
+
+
+create table Category (
+    label varchar(10) not null,
+    primary key (label)
+);
+
+create table Possession (
+    ID_possession  INT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    FK_category varchar(10) not null,
+    FK_keyboard INT not null,
+    primary key (ID_possession)
+);
+
+create table Keyboard (
+    ID_keyboard INT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    keyboardName varchar(50) not null,
+    price numeric(5,2) not null,
+    weight numeric(4,3) not null,
+    led boolean default false not null,
+    longeur numeric(4,2) not null,
+    layout varchar(4) not null,
+    switches varchar(20) not null,
+    brand varchar(50) not null,
+    urlImage varchar(200),
+    primary key (ID_keyboard)
+);
+
+create table Country (
+    label varchar(5) not null,
+    shippingCost numeric(4,2) not null,
+    primary key (label)
+);
+
+create table Client (
+    ID_client INT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    lastName varchar(50) not null,
+    firstName varchar(50) not null,
+    email varchar(50) not null,
+    password varchar(200) not null,
+    phone varchar(12) default null,
+    street varchar(50) not null,
+    houseNum numeric(4) not null,
+    city varchar(50) not null,
+    postCode numeric(6) not null,
+    FK_country varchar(5) not null,
+    primary key (ID_client),
+    foreign key (FK_country) references Country(label),
+    constraint unique_email unique(email),
+    constraint unique_phone unique(phone)
+);
+
+create table Orders (
+    ID_orders INT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    ordersDate date not null,
+    FK_client INT not null,
+    primary key (ID_orders),
+    foreign key (FK_client) references Client (ID_client)
+);
+
+create table LineOrders (
+    ID_lineOrders INT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    quantity numeric(2) not null,
+    price numeric(5,2) not null,
+    FK_orders INT not null,
+    FK_keyboard INT not null,
+    primary key (ID_lineOrders),
+    foreign key (FK_keyboard) references Keyboard(ID_keyboard),
+    foreign key (FK_orders) references Orders(ID_orders)
+);
+
+
+create table Languages (
+    label varchar(2) not null,
+    primary key (label)
+);
+
+
+create table TranslationsCategory (
+    ID_translation INT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    description varchar(150) not null,
+    FK_language varchar(2) not null,
+    FK_category varchar(10) not null,
+    primary key (ID_translation),
+    foreign key (FK_language) references Languages(label),
+    foreign key (FK_category) references Category(label)
+);
+
+create table TranslationsCountry (
+    ID_translation INT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
+    description varchar(150) not null,
+    FK_language varchar(2) not null,
+    FK_country varchar(5) not null,
+    primary key (ID_translation),
+    foreign key (FK_language) references Languages(label),
+    foreign key (FK_country) references Country(label)
+);
+
+INSERT INTO CED.LANGUAGES (LABEL) VALUES ('fr');
+INSERT INTO CED.LANGUAGES (LABEL) VALUES ('en');
+
+INSERT INTO CED.CATEGORY ("LABEL") VALUES ('GAMING');
+INSERT INTO CED.CATEGORY ("LABEL") VALUES ('TYPING');
+INSERT INTO CED.CATEGORY (LABEL) VALUES ('MAC');
+INSERT INTO CED.CATEGORY (LABEL) VALUES ('MECH');
+INSERT INTO CED.CATEGORY (LABEL) VALUES ('RUBBER');
+INSERT INTO CED.CATEGORY (LABEL) VALUES ('WIRELESS');
+INSERT INTO CED.CATEGORY (LABEL) VALUES ('TOPRE');
+
+
+INSERT INTO CED.COUNTRY (SHIPPINGCOST, LABEL) VALUES (1.50, 'BE');
+INSERT INTO CED.COUNTRY (SHIPPINGCOST, LABEL) VALUES (3.50, 'FR');
+INSERT INTO CED.COUNTRY (SHIPPINGCOST, LABEL) VALUES (2.50, 'LUX');
+INSERT INTO CED.COUNTRY (SHIPPINGCOST, LABEL) VALUES (4.50, 'GER');
+INSERT INTO CED.COUNTRY (SHIPPINGCOST, LABEL) VALUES (3.00, 'NL');
+
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('Choc mini', 84.99, 0.730, false, 31.50, 'US', 'Cherry MX-Brown', 'Noppoo', 'http://ecx.images-amazon.com/images/I/61fjuHsV8JL._SL1200_.jpg');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('BlackWidow Chroma', 199.99, 1.500, true, 47.50, 'US', 'Razer Green', 'Razer', 'http://assets.razerzone.com/eeimages/products/17557/razer-blackwidow-ultimate-gallery-02.png');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('POK3R PBT', 109.99, 0.6, false, 36, 'US', 'Cherry MX Green', 'Vortex', 'https://mechanicalkeyboards.com/shop/images/products/large_1238_IMG_0984.jpg');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('ONE', 112.99, 1.1, true, 40, 'US', 'Cherry MX Brown', 'Vortex', 'https://mechanicalkeyboards.com/shop/images/products/large_981_10497509_722020844532295_8985276145178273665_o.jpg');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('V60', 95.99, 0.8, true, 30, 'FR', 'Cherry MX Blue', 'KBParadise', 'https://mechanicalkeyboards.com/shop/images/products/large_874_1920547_837001296325345_1891984463_n.jpg');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('Shine 4', 139.99, 2.800, true, 36.00, 'BE', 'Cherry MX Red', 'Ducky', 'https://mechanicalkeyboards.com/shop/images/products/large_1203_11082205_837618106313285_8977778989833066947_o.jpg');
+
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('Type Heaven', 129.99, 3.0, false, 38, 'US', 'Topre', 'Topre', 'https://mechanicalkeyboards.com/shop/images/products/large_522_Topre_1.jpg');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('BlackWidow', 75.45, 1.2, true, 35, 'FR', 'Razer Blue', 'Razer', 'https://mechanicalkeyboards.com/shop/images/products/large_8_RZ03-00390100-R3U1_A.jpg');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('DeathStalker Chroma', 89.99, 1.55, true, 38, 'FR', 'Razer rubber', 'Razer', 'http://assets.razerzone.com/eeimages/products/22563/deathstalker-chroma-keyboard-layout-05.png');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('Anansi', 85.59, 1.2, true, 36, 'FR', 'Razer rubber', 'Razer', 'http://assets.razerzone.com/eeimages/products/58/razer-anansi-gallery-1.png');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('Magic Keyboard', 50.99, 0.3, false, 30, 'FR', 'Apple tech', 'Apple', 'https://imgur.com/bGmGJH4');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('Belkin YourType', 39.99, 0.2, false, 10, 'US', 'Apple tech', 'Apple', 'https://imgur.com/6HO6fRY');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('Keyboard with Numeric Keypad', 60.99, 0.4, false, 45, 'FR', 'Apple tech', 'Apple', 'https://imgur.com/s4HzHFz');
+
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('Solar K750', 110.99, 2.55, false, 36, 'US', 'Logitech dome', 'Logitech', 'http://cdn.toptenreviews.com/rev/prod/large/54147-logitech-solar-k750-box.jpg');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('K400 Plus', 31.99, 0.56, false, 22, 'BE', 'Logitech dome', 'Logitech', 'https://secure.logitech.com/assets/54246/wireless-touch-keyboard-k400-plus.png');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('TK820', 89.99, 0.75, false, 32, 'BE', 'Logitech dome', 'Logitech', 'https://secure.logitech.com/assets/54295/wireless-all-in-one-keyboard-tk820.png');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('K350', 49.99, 0.95, false, 40, 'BE', 'Logitech dome', 'Logitech', 'https://secure.logitech.com/assets/54986/k350-gallery.png');
+
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('FC660', 210.99, 2.6, false, 34, 'US', 'Topre', 'Leopold', 'https://mechanicalkeyboards.com/shop/images/products/large_1323_DSC_1268.jpg');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('FK403 PC Ergo Pro', 200.99, 2.1, false, 16, 'US', 'Matias Quiet Click', 'Matias', 'https://mechanicalkeyboards.com/shop/images/products/large_1176_1.jpg');
+INSERT INTO CED.KEYBOARD (KEYBOARDNAME, PRICE, WEIGHT, LED, LONGEUR, LAYOUT, SWITCHES, BRAND, URLIMAGE) 
+    VALUES ('POK3R', 129.99, 1.6, false, 22, 'FR', 'Cherry MX Clear', 'Vortex', 'https://mechanicalkeyboards.com/shop/images/products/large_1419_DSC_1377.jpg');
+
+
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY) VALUES ('Jeux', 'fr', 'GAMING');
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY) VALUES ('Gaming', 'en', 'GAMING');
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY) VALUES ('Dactylographie', 'fr', 'TYPING');
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY) VALUES ('Typing', 'en', 'TYPING');
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY) VALUES ('Mac', 'fr', 'MAC');
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY) VALUES ('Mac', 'en', 'MAC');
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY) VALUES ('Mechanique', 'fr', 'MECH');
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY) VALUES ('Mechanical', 'en', 'MECH');
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY) VALUES ('Caoutchouc', 'fr', 'RUBBER');
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY)  VALUES ('Rubber dome', 'en', 'RUBBER');
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY) VALUES ('Sans-fil', 'fr', 'WIRELESS');
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY) VALUES ('Wireless', 'en', 'WIRELESS');
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY) VALUES ('Topre', 'fr', 'TOPRE');
+INSERT INTO CED.TRANSLATIONSCATEGORY (DESCRIPTION, FK_LANGUAGE, FK_CATEGORY) VALUES ('Topre', 'en', 'TOPRE');
+
+
+INSERT INTO CED.TRANSLATIONSCOUNTRY (DESCRIPTION, FK_LANGUAGE, FK_COUNTRY) VALUES ('Belgique', 'fr', 'BE');
+INSERT INTO CED.TRANSLATIONSCOUNTRY (DESCRIPTION, FK_LANGUAGE, FK_COUNTRY) VALUES ('Belgium', 'en', 'BE');
+INSERT INTO CED.TRANSLATIONSCOUNTRY (DESCRIPTION, FK_LANGUAGE, FK_COUNTRY) VALUES ('France', 'fr', 'FR');
+INSERT INTO CED.TRANSLATIONSCOUNTRY (DESCRIPTION, FK_LANGUAGE, FK_COUNTRY) VALUES ('France', 'en', 'FR');
+INSERT INTO CED.TRANSLATIONSCOUNTRY (DESCRIPTION, FK_LANGUAGE, FK_COUNTRY) VALUES ('Luxembourg', 'fr', 'LUX');
+INSERT INTO CED.TRANSLATIONSCOUNTRY (DESCRIPTION, FK_LANGUAGE, FK_COUNTRY) VALUES ('Luxemburg', 'en', 'LUX');
+INSERT INTO CED.TRANSLATIONSCOUNTRY (DESCRIPTION, FK_LANGUAGE, FK_COUNTRY) VALUES ('Allemagne', 'fr', 'GER');
+INSERT INTO CED.TRANSLATIONSCOUNTRY (DESCRIPTION, FK_LANGUAGE, FK_COUNTRY) VALUES ('Germany', 'en', 'GER');
+INSERT INTO CED.TRANSLATIONSCOUNTRY (DESCRIPTION, FK_LANGUAGE, FK_COUNTRY) VALUES ('Pays-Bas', 'fr', 'NL');
+INSERT INTO CED.TRANSLATIONSCOUNTRY (DESCRIPTION, FK_LANGUAGE, FK_COUNTRY) VALUES ('Netherlands', 'en', 'NL');
+
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) VALUES ('TYPING', 1);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) VALUES ('GAMING', 2);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD);
+    VALUES ('TYPING', 3);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('TYPING', 4);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('TYPING', 5);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('TYPING', 6);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('GAMING', 1);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('GAMING', 4);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('GAMING', 6);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('GAMING', 8);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('GAMING', 9);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('GAMING', 10);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('TYPING', 8);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('TYPING', 20);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('GAMING', 20);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('MAC', 11);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('MAC', 13);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('MAC', 12);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('WIRELESS', 14);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('WIRELESS', 15);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('WIRELESS', 16);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('WIRELESS', 17);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('MECH', 1);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('MECH', 2);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('MECH', 3);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('MECH', 4);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('MECH', 5);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('MECH', 6);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('MECH', 8);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('MECH', 20);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('TOPRE', 18);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('TOPRE', 7);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('RUBBER', 9);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('RUBBER', 10);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('RUBBER', 14);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('RUBBER', 15);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('RUBBER', 16);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('RUBBER', 17);
+INSERT INTO CED.POSSESSION (FK_CATEGORY, FK_KEYBOARD) 
+    VALUES ('RUBBER', 19);
+
