@@ -68,6 +68,7 @@
                 
                 <h:outputLabel value="#{msg.houseNum}" for="houseNum"/>
                 <h:inputText id="houseNum" validatorMessage="#{msg.validateHouseNum}" value="#{userManager.client.houseNum}">
+                    <f:convertNumber integerOnly="true" type="number"/>
                     <f:validateDoubleRange minimum="1" maximum="9999"/>
                 </h:inputText>
                 <h:message for="houseNum"/>
@@ -82,6 +83,7 @@
                 
                 <h:outputLabel value="#{msg.postCode}" for="postCode"/>
                 <h:inputText id="postCode" validatorMessage="#{msg.validatePostalCode}" value="#{userManager.client.postCode}">
+                    <f:convertNumber integerOnly="true" type="number"/>
                     <f:validateDoubleRange minimum="1" maximum="999999"/>
                 </h:inputText>
                 <h:message for="postCode"/>

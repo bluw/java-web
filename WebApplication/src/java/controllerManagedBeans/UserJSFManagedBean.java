@@ -134,7 +134,7 @@ public class UserJSFManagedBean implements Serializable {
         try {
             int idOrder = websiteSessionBean.addOrders(client.getId());
             websiteSessionBean.addLineOrders(idOrder, cart);
-
+            cart.clear();
             return "home";
         } catch (Exception e) {
             return "errorPage";
