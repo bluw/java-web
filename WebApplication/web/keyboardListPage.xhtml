@@ -22,6 +22,7 @@ and open the template in the editor.
         <c:forEach items="#{userManager.findKeyboardListByCategory()}" var="keyboard">
             
             <div id="keyboardElements">
+                <h:graphicImage value="#{keyboard.urlImage}" width="100" height="60"/>
                 <br/>
                 <h:outputText value="#{keyboard.brand} #{keyboard.name} - #{keyboard.switches} Switches - Layout: #{keyboard.layout} - "/>
                 <h:outputText value="#{keyboard.price}" converter="priceConverter"/>
@@ -29,20 +30,6 @@ and open the template in the editor.
                 <br/>
                 <h:commandLink value="#{msg.details}" action="#{userManager.viewDetails(keyboard)}" />
                 <br/>
-                <br/>
-                <h:commandButton value="#{msg.add}" action="#{userManager.addArticle(keyboard.id)}" onclick="alert('#{msg.added}')"/>
-                <h:selectOneListbox id="Quantity" size="1" value="#{userManager.nbArticle}">
-                        <f:selectItem itemValue="1" itemLabel="1"/>
-                        <f:selectItem itemValue="2" itemLabel="2"/>
-                        <f:selectItem itemValue="3" itemLabel="3"/>
-                        <f:selectItem itemValue="4" itemLabel="4"/>
-                        <f:selectItem itemValue="5" itemLabel="5"/>
-                        <f:selectItem itemValue="6" itemLabel="6"/>
-                        <f:selectItem itemValue="7" itemLabel="7"/>
-                        <f:selectItem itemValue="8" itemLabel="8"/>
-                        <f:selectItem itemValue="9" itemLabel="9"/>                
-                </h:selectOneListbox>
-                
             </div>
         
         </c:forEach>

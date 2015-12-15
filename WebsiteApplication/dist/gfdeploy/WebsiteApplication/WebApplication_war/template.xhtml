@@ -53,6 +53,9 @@
                     <li><h:commandLink value="#{msg.login}" action="faces/loginIn.xhtml" disabled="#{userManager.isLogged}" style="color: #CCC"/></li>
                     <li><h:commandLink value="#{msg.register}" action="faces/registerPage.xhtml" disabled="#{userManager.isLogged}" style="color: #CCC"/></li>
                     </c:if>
+                    <c:if test="#{userManager.isLogged}">
+                        <li><h:commandLink value="#{msg.deconnect}" action="#{userManager.deconnect()}" style="color: #CCC"/></li>
+                    </c:if>
                     <li><h:commandLink value="#{msg.shoppingCart}" action="faces/shoppingCart.xhtml" style="color: #CCC"/></li>
                 </h:form>
             </ul>            

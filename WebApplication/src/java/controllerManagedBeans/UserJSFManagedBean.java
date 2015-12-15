@@ -149,6 +149,7 @@ public class UserJSFManagedBean implements Serializable {
         } else {
             cart.replace(id, --quantity);
         }
+        
         return "shoppingCart";
     }
     
@@ -161,6 +162,12 @@ public class UserJSFManagedBean implements Serializable {
     {
         keyboardToDisplay = keyboard;
         return "keyboardDetails";
+    }
+    
+    public String deconnect() {
+        client = new ClientM();
+        isLogged = false;
+        return "home";
     }
     
     /* GETTORS AND SETTORS ATTRIBUTE ETC*/    

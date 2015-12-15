@@ -20,6 +20,7 @@ public class KeyboardM {
     private int id;
     private String brand;
     private String urlImage;
+    private String nbArticle;
 
     public String getUrlImage() {
         return urlImage;
@@ -43,6 +44,14 @@ public class KeyboardM {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNbArticle() {
+        return nbArticle;
+    }
+
+    public void setNbArticle(String nbArticle) {
+        this.nbArticle = nbArticle;
     }
     
     
