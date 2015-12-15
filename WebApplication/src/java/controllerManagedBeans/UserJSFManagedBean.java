@@ -153,6 +153,14 @@ public class UserJSFManagedBean implements Serializable {
         return "shoppingCart";
     }
     
+    public String addOneArticle(int id) {
+        int quantity = (int) cart.get(id);
+
+        cart.replace(id, ++quantity);
+
+        return "shoppingCart";
+    }
+    
     public String deleteArticle(int id){
         cart.remove(id);
         return "shoppingCart";

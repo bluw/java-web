@@ -35,6 +35,7 @@ and open the template in the editor.
                     <h:outputText value="#{msg.quantity} #{userManager.cart.get(keyboard.id)}"/>
                     <br/>
                     <h:commandButton value="#{msg.getRid}" action="#{userManager.takeOffOneArticle(keyboard.id)}"/>
+                    <h:commandButton value="#{msg.addOne}" action="#{userManager.addOneArticle(keyboard.id)}"/>
                 </li>
                 <li>
                     <h:outputText value="#{msg.subTotal}"/>
