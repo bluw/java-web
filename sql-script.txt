@@ -56,8 +56,7 @@ create table Client (
     FK_country varchar(5) not null,
     primary key (ID_client),
     foreign key (FK_country) references Country(label),
-    constraint unique_email unique(email),
-    constraint unique_phone unique(phone)
+    constraint unique_email unique(email)
 );
 
 create table Orders (
