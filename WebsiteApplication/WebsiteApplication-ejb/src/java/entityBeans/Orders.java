@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Orders.findByIdOrders", query = "SELECT o FROM Orders o WHERE o.idOrders = :idOrders"),
     @NamedQuery(name = "Orders.findByOrdersdate", query = "SELECT o FROM Orders o WHERE o.ordersdate = :ordersdate"),
     
+    //query ajoutee
     @NamedQuery(name = "Orders.findLast", query = "SELECT o FROM Orders o ORDER BY o.idOrders DESC")
 })
 public class Orders implements Serializable {

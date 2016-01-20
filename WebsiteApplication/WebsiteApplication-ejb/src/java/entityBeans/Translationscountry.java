@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Translationscountry.findAll", query = "SELECT t FROM Translationscountry t"),
     @NamedQuery(name = "Translationscountry.findByIdTranslation", query = "SELECT t FROM Translationscountry t WHERE t.idTranslation = :idTranslation"),
     @NamedQuery(name = "Translationscountry.findByDescription", query = "SELECT t FROM Translationscountry t WHERE t.description = :description"),
-    
+    //query ajoutee
     @NamedQuery(name = "Translationscountry.findCountryTranslationByLanguage", query = "SELECT t FROM Translationscountry t WHERE t.fkLanguage.label = :lang"),
     @NamedQuery(name = "Translationscountry.findCountryNameTranslated", query = "SELECT t FROM Translationscountry t WHERE t.fkLanguage.label = :lang AND t.fkCountry.label = :id")
     

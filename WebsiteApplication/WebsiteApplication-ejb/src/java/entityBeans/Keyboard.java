@@ -44,6 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Keyboard.findByBrand", query = "SELECT k FROM Keyboard k WHERE k.brand = :brand"),
     @NamedQuery(name = "Keyboard.findByUrlimage", query = "SELECT k FROM Keyboard k WHERE k.urlimage = :urlimage"),
     
+    //query ajoutee
     @NamedQuery(name = "Keyboard.findByCategory", query = "SELECT k FROM Keyboard k, Possession p, Category c WHERE p.fkCategory = c.label AND p.fkKeyboard = k.idKeyboard AND c.label = :label")
 })
 public class Keyboard implements Serializable {
