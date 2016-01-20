@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Translationscategory.findAll", query = "SELECT t FROM Translationscategory t"),
     @NamedQuery(name = "Translationscategory.findByIdTranslation", query = "SELECT t FROM Translationscategory t WHERE t.idTranslation = :idTranslation"),
     @NamedQuery(name = "Translationscategory.findByDescription", query = "SELECT t FROM Translationscategory t WHERE t.description = :description"),
+    //query ajoutee 
     @NamedQuery(name = "Translationscategory.findCategoryTranslationByLanguage", query = "SELECT t FROM Translationscategory t WHERE t.fkLanguage.label = :lang")
 })
 public class Translationscategory implements Serializable {

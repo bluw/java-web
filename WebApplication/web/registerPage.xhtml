@@ -15,6 +15,7 @@
             <h:form>
                   
                 <h:outputLabel value="#{msg.lastName}" for="lastName"/>
+                <!-- si le nom est plus petit que 2 ou plus grand que 50 il affiche un message du "validator" -->
                 <h:inputText id="lastName" validatorMessage="#{msg.validateLastName}" value="#{userManager.client.lastName}">
                     <f:validateLength minimum="2" maximum="50"/>
                 </h:inputText>
@@ -30,6 +31,7 @@
                 
                 <h:outputLabel value="#{msg.email}" for="email"/>
                 <h:inputText id="email" value="#{userManager.client.email}">
+                    <!-- appel du validator creer par mes soins (voir le folder validators) pour valider l'email (faire les test avec @ et . etc) -->
                     <f:validator validatorId="emailValidator"></f:validator>
                     <f:attribute name="userLanguage" value="#{userManager.language}"/>
                 </h:inputText>
@@ -45,6 +47,7 @@
                 
                 <h:outputLabel value="#{msg.checkPassword}" for="passwordCheck"/>
                 <h:inputSecret id="passwordCheck" value="#{userManager.passwordCheck}" required="true" requiredMessage="#{msg.mandatoryPasswordCheck}">
+                    <!-- idem appel du validator pour le password -->
                     <f:validator validatorId="passwordValidator"></f:validator>
                     <f:attribute name="userLanguage" value="#{userManager.language}"/>
                     <f:attribute name="password" value="#{passwordComponent.value}"/>  
@@ -95,7 +98,8 @@
                             <f:selectItem itemValue="#{cntry.label}" itemLabel="#{cntry.nameTranslated}"/>
                     </c:forEach>
                 </h:selectOneMenu>
-          
+                
+                <!-- appel de la fonction register dans le manager (avec les validators le client a bien ete remplis -->
                 <h:commandButton value="#{msg.confirmSignUp}" disabled="#{userManager.isLogged}" action="#{userManager.register()}"/>
                 <br/>
         </h:form>

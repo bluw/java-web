@@ -18,7 +18,7 @@ and open the template in the editor.
     <h:body>
         <h:form>
         
-           
+        <!-- on boucle sur la liste des keyboard trouver pour cette categorie -->             
         <c:forEach items="#{userManager.findKeyboardListByCategory()}" var="keyboard">
             
             <div id="keyboardElements">
@@ -28,6 +28,7 @@ and open the template in the editor.
                 <h:outputText value="#{keyboard.price}" converter="priceConverter"/>
                 <br/>
                 <br/>
+                <!-- montre la page des details du keyboard selectionner -->  
                 <h:commandLink value="#{msg.details}" action="#{userManager.viewDetails(keyboard)}" />
                 <br/>
             </div>

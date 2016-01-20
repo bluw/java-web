@@ -25,8 +25,9 @@ import model.KeyboardM;
  * @author etu26227
  */
 @Named(value = "userManager")
-@SessionScoped
+@SessionScoped //SESSION SCOPE parce que sa marche bien
 public class UserJSFManagedBean implements Serializable {
+    //injection de l'EJB 
     @EJB
     private websiteSessionBeanLocal websiteSessionBean;
 
@@ -34,31 +35,42 @@ public class UserJSFManagedBean implements Serializable {
     public String login()
     {
         try {
+            //appel de la methode session bean
             client = websiteSessionBean.getAccount(email, password, language);
+            // en fonction de ce boolean, certain element de la vue safficheront ou non
             isLogged = true;
+
+            //retourne sur la page home une fois connecter
             return "home";
         } catch (Exception e){
             isLogged = false;
+            //return sur une page erreur
             return "errorLoginPage";
         }
     }
     
+    //fonction appeller lorsquon click sur le drapeau de la langue
     public String loadLanguage(String lang) 
     {
         setLanguage(lang);
         try {
+            //load les listes traduites
             categoryList = websiteSessionBean.getListCategory(language);
             countryList = websiteSessionBean.getListCountry(language);
+
+            //reste sur la page
             return null;
         } catch (Exception e) {
             return "errorPage";
         }
     }
     
+
     public String search() {
         return "keyboardListPage";
     }
     
+
     public String register() 
     {       
         try {
@@ -74,8 +86,10 @@ public class UserJSFManagedBean implements Serializable {
     
     public String addArticle(int id)
     {
+        //recupere le nombre darticle dans la combobox de la vue
         int nb = Integer.parseInt(nbArticle);
-           
+        
+        //ajoute une quantity pour ce keyboard id (key) recuperer par keyboardToDisplay.id mis dans lappel de la fonction dans la page de details 
         cart.put(id, nb);
         
         return "keyboardListPage";
@@ -87,6 +101,7 @@ public class UserJSFManagedBean implements Serializable {
     {
         try {
             keyboardList = websiteSessionBean.getListKeyboard(categoryLabel);
+            //retoune la liste utiliser par le foreach
             return keyboardList;
             //return websiteSessionBean.getListKeyboard(categoryLabel);
         } catch (Exception e) {
@@ -97,6 +112,7 @@ public class UserJSFManagedBean implements Serializable {
     public List<KeyboardM> getKeyboardFromCart()
     {
         try {
+            //recupere la list des keyboard dans le panier via les id-key stocker dans la hasmap
             keyboardListInCart = websiteSessionBean.getListKeyboardFromCart(cart);   
             return keyboardListInCart;
         } catch (Exception e) {
@@ -130,6 +146,7 @@ public class UserJSFManagedBean implements Serializable {
     }
     
     
+    //bouton commander
     public String addOrder() {
         try {
             int idOrder = websiteSessionBean.addOrders(client.getId());
@@ -141,7 +158,7 @@ public class UserJSFManagedBean implements Serializable {
         }
     }
     
-            
+    //bouton -  
     public String takeOffOneArticle(int id) {
         int quantity = (int) cart.get(id);
         if(quantity == 1) {
@@ -153,6 +170,7 @@ public class UserJSFManagedBean implements Serializable {
         return "shoppingCart";
     }
     
+    //bouton + 
     public String addOneArticle(int id) {
         int quantity = (int) cart.get(id);
 
@@ -161,24 +179,50 @@ public class UserJSFManagedBean implements Serializable {
         return "shoppingCart";
     }
     
+    //bouton delete
     public String deleteArticle(int id){
         cart.remove(id);
         return "shoppingCart";
     }
     
+
+    //bouton pour voir les details dun keyboard
     public String viewDetails(KeyboardM keyboard)
     {
+        //set le keyboard selectionner pour pouvoir afficher ses infos sur la page de details
         keyboardToDisplay = keyboard;
+        //puis change la page
         return "keyboardDetails";
     }
     
+    //bouton deconnexion
     public String deconnect() {
         client = new ClientM();
         isLogged = false;
         return "home";
     }
     
-    /* GETTORS AND SETTORS ATTRIBUTE ETC*/    
+    
+    //premiere fonction appellee quand on arrive sur le site
+    @PostConstruct
+    public void init()
+    {  
+        client = new ClientM();
+        country = new CountryM();
+
+        //pas encore logged
+        isLogged = false;
+
+        //panier vide
+        cart = new HashMap();
+
+        //langue de base en francais
+        loadLanguage("fr");
+    }
+    
+    
+
+    /* GETTORS AND SETTORS ATTRIBUTE ETC utilisee par le JSF*/    
     
     private ClientM client;
     private CountryM country;
@@ -196,18 +240,7 @@ public class UserJSFManagedBean implements Serializable {
     private List<KeyboardM> keyboardListInCart;
     private KeyboardM keyboardToDisplay;
     
-    
-    @PostConstruct
-    public void init()
-    {  
-        client = new ClientM();
-        country = new CountryM();
-        isLogged = false;
-        cart = new HashMap();
-        loadLanguage("fr");
-    }
-    
-    
+
     public UserJSFManagedBean() {
     }
 

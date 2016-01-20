@@ -6,12 +6,17 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     
+    <!-- load les locales (utilisee pour la trad du site) grace a la langue choisie-->
     <f:view locale="#{userManager.language}">
+    <!-- load le bundle de langue avec les trad du site -->
     <f:loadBundle basename="languages.lang" var="msg"/>
     <h:head>
         <title>Home</title>
     </h:head>
+
+    <!--  decomposition pour set le template -->
     <ui:composition template="./template.xhtml">
+    <!-- define pour dire ou il se place dans le template (<ui:insert name=content /> dans le template) -->
     <ui:define name="content">
     <h:body>
 

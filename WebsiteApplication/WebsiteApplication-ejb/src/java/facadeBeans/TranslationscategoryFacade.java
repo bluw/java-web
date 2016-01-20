@@ -32,6 +32,7 @@ public class TranslationscategoryFacade extends AbstractFacade<Translationscateg
 
     @Override
     public List<Translationscategory> findCategoryTranslationByLanguage(String language) {
+        //appel de la query pour retrouver les caterogies traduite en fonction de la langue
         Query query = em.createNamedQuery("Translationscategory.findCategoryTranslationByLanguage");
         query.setParameter("lang", language);
            

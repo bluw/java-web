@@ -28,6 +28,7 @@
                 </li>
                 <li>
                     <h:outputText value="#{msg.led}"/>
+                                  <!-- convertisseur pour afficher le boolean Led en OUI/NON en fonction de la langue (au lieu de true/false) -->  
                     <h:outputText value="#{userManager.keyboardToDisplay.led}" converter="ledBooleanConverter">
                         <f:attribute name="userLanguage" value="#{userManager.language}"/>
                     </h:outputText>
@@ -40,7 +41,7 @@
                 </li>
             </ul>
             
-                
+                        <!-- addArticle passe l'id du keyboard pour mettre cette key dans la hasmap -->  
             <h:commandButton value="#{msg.add}" action="#{userManager.addArticle(userManager.keyboardToDisplay.id)}" onclick="alert('#{msg.added}')"/>
                 <h:selectOneListbox id="Quantity" size="1" value="#{userManager.nbArticle}">
                         <f:selectItem itemValue="1" itemLabel="1"/>

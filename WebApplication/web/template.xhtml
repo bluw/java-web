@@ -18,19 +18,23 @@
         <div id="top">
             <div id="logo"><img src="resources/images/logo.png"></img></div>
             
+            <!-- message dacceuil en fonction de si il est logged ou pas-->
             <div id="name_header">
                 <c:if test="#{!userManager.isLogged}">
                 <h:outputText value="#{msg.welcomeGuest}"/>
             </c:if>
-        
+            
             <c:if test="#{userManager.isLogged}">
                 <h:outputText value="#{msg.welcomeBack} #{userManager.client.firstName}"/>
             </c:if>     
             </div>
-            
+            <!-- -->
+
+            <!-- section de language -->
             <div id="language">
                 <span style="float: right">
                 <h:form>
+                <!-- s'il appuye sur drapeau francais, on appelle la fonction load avec 'fr' comme args -->
                   <h:commandLink  action="#{userManager.loadLanguage('fr')}">    
                     <h:graphicImage value="resources/images/french.png"/>
                   </h:commandLink>
@@ -39,23 +43,28 @@
                     <h:graphicImage value="resources/images/english.png"/>
                   </h:commandLink>
                 </h:form>
-                </span>
-                
-           </div>          
+                </span>           
+           </div>      
+ 
         </div>
         
         <div id="menu">
             <ul>
                 <h:form>
+                    <!-- boutons du menu, avec leur actions qui remplace la vue du milieu -->
                     <li><h:commandLink value="#{msg.home}" action="faces/home.xhtml" style="color: #CCC"/></li>
                     <li><h:commandLink value="#{msg.aboutUs}" action="faces/aboutUs.xhtml" style="color: #CCC"/></li>
+
+                    <!-- bouton pour se register ou logged si il pas logged-->
                     <c:if test="#{!userManager.isLogged}">
                     <li><h:commandLink value="#{msg.login}" action="faces/loginIn.xhtml" disabled="#{userManager.isLogged}" style="color: #CCC"/></li>
                     <li><h:commandLink value="#{msg.register}" action="faces/registerPage.xhtml" disabled="#{userManager.isLogged}" style="color: #CCC"/></li>
                     </c:if>
+                    <!-- bouton pour se deco si il est logged -->
                     <c:if test="#{userManager.isLogged}">
                         <li><h:commandLink value="#{msg.deconnect}" action="#{userManager.deconnect()}" style="color: #CCC"/></li>
                     </c:if>
+
                     <li><h:commandLink value="#{msg.shoppingCart}" action="faces/shoppingCart.xhtml" style="color: #CCC"/></li>
                 </h:form>
             </ul>            
@@ -68,6 +77,7 @@
                                    
                 <h1>Categories</h1>
      
+                <!-- select one item de la liste des categorie, montre la categorie traduite et set le label qui sera utiliser pour la recherche -->
                 <h:selectOneMenu value="#{userManager.categoryLabel}">
                         <c:forEach items="#{userManager.categoryList}" var="category">
                             <f:selectItem itemValue="#{category.label}" itemLabel="#{category.labelnTranslated}"/>
@@ -77,6 +87,7 @@
         </div>                       
             
         <div id="content" class="left_content">
+            <!-- ici on insert la partie de la vue qui est load dynamiquement en fonction de la page -->
             <ui:insert name="content"/>
         </div>
                       

@@ -17,10 +17,13 @@ and open the template in the editor.
     <ui:define name="content">
     <h:body>
         <h:form>
+        <!-- montre message si le panier est vide -->
         <c:if test="#{userManager.cart.isEmpty()}">
             <h:outputText value="#{msg.emptyCart}"/>
             <br/>
         </c:if>
+
+        <!-- si pas vide on montre les claviers -->
         <c:if test="#{!userManager.cart.isEmpty()}">
             <c:forEach items="#{userManager.getKeyboardFromCart()}" var="keyboard">
               
@@ -47,16 +50,19 @@ and open the template in the editor.
                 
             </c:forEach>
             
+            <!-- si le client est logged on ajoute les shipping cost -->
             <c:if test="#{userManager.isLogged}">
                 <h:outputText value="#{msg.shippingCost} (#{userManager.client.country.nameTranslated}): "/>
                 <h:outputText value="#{userManager.client.country.shippingCost}" converter="priceConverter"/>
                 <br/>
             </c:if>
             
+            <!-- on montre le total -->
             <h:outputText value="#{msg.total}"/>
             <h:outputText value="#{userManager.computeTotal()}" converter="priceConverter"/>
             <br/>
         </c:if>
+        <!-- si logged on montre ladresse et le bonton pour commander  -->
         <c:if test="#{userManager.isLogged}">
             <br/>
             <h:outputText value="#{msg.address}"/>
@@ -81,6 +87,7 @@ and open the template in the editor.
             <br/>
             <h:commandButton value="#{msg.confirm}" action="#{userManager.addOrder()}" disabled="#{userManager.cart.isEmpty()}"/>
         </c:if>
+        <!-- si pas logged on propose pour quil se register ou se log (il garde son panier) -->
         <c:if test="#{!userManager.isLogged}">
             <br/>
             <h:commandLink value="#{msg.register}" disabled="#{userManager.isLogged}" action="faces/registerPage.xhtml" />

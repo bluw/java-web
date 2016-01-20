@@ -11,14 +11,22 @@ and open the template in the editor.
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+    <!-- LOGIN PAGE pour se log avec son email et password -->
     
+    <!-- load les locales (utilisee pour la trad du site) grace a la langue choisie-->
     <f:view locale="#{userManager.language}">
+    <!-- load le bundle de langue avec les trad du site -->
     <f:loadBundle basename="languages.lang" var="msg"/>
+
+    <!--  decomposition pour set le template -->
     <ui:composition template="./template.xhtml">
+    <!-- define pour dire ou il se place dans le template (<ui:insert name=content /> dans le template) -->
     <ui:define name="content">
+
     <h:body>
         <h:form>
         <h:outputLabel value="#{msg.email}" for="email"/>
+        <!-- set la value email , required a true et le message derreur traduit si il met rien -->
         <h:inputText id="email" value="#{userManager.email}" required="true" requiredMessage="#{msg.mandatoryEmail}"/>
         <h:message for="email"/>
         <br/>
@@ -28,6 +36,7 @@ and open the template in the editor.
         <h:message for="password"/>
         <br/>
         
+                                         <!-- disable le bouton (au cas ou) une fois qu'il est logged -->
         <h:commandButton value="#{msg.login}" disabled="#{userManager.isLogged}" action="#{userManager.login()}"/>
         <br/>
         </h:form>
